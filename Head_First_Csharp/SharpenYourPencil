@@ -1,0 +1,77 @@
+class Elephant
+{
+    public int earSize;
+    public string? name;
+
+    public void WhoAmI()
+    {
+        Console.WriteLine($"My name is {name}");
+        Console.WriteLine($"My ears are {earSize} inches tall");
+    }
+
+    public void HearMessage(string message, Elephant whoSaidIt)
+    {
+        Console.WriteLine($"{name} heard a message");
+        Console.WriteLine($"{whoSaidIt.name} said this {message}");
+    }
+
+    public void SpeakTo(Elephant whoToTalkTo, string message)
+    {
+        whoToTalkTo.HearMessage(message, this);
+    }
+}
+
+class Print
+{
+    static void Main()
+    {
+        Console.WriteLine("Press 1 for Lloyd, 2 for Lucinda, 3 to swap");
+
+
+        Elephant lucinda = new Elephant() { name = "Lucinda", earSize = 33 };
+        Elephant lloyd = new Elephant() { name = "Lloyd", earSize = 40 };
+
+        while (true)
+        {
+            string? answer = Console.ReadLine();
+            Console.WriteLine($"You pressed {answer}");
+
+            if (int.TryParse(answer, out int num))
+            {
+                if (num == 1)
+                {
+                    Console.WriteLine($"Calling lloyd.WhoAmI()");
+                    lloyd.WhoAmI();
+                }
+                else if (num == 2)
+                {
+                    Console.WriteLine($"Calling lucinda.WhoAmI()");
+                    lucinda.WhoAmI();
+                }
+                else if (num == 3)
+                {
+                    Elephant other;
+                    other = lloyd;
+                    lloyd = lucinda;
+                    lucinda = other;
+                    Console.WriteLine("References have been swapped");
+                }
+                else if(num == 4)
+                {
+                    lloyd = lucinda;
+                    lloyd.earSize = 4321;
+                    lloyd.WhoAmI();
+                }
+                else if(num == 5)
+                {
+                    lucinda.SpeakTo(lloyd, "Hi! Lloyd");
+                }
+                else return;
+            }
+
+            
+        }
+
+
+    }
+}
